@@ -16,5 +16,19 @@ public class Mountain {
         location = l;
         height = h;
     }
+
+    public String info() {
+        String tmp = new String();
+        tmp += name + " is located in mountain range " + location + " and reaches " + height + "m above sea level.";
+        return tmp;
+    }
+        public void setName(String n){
+
+        name=n;
+       }
+
+       public String getName(){
+        return name;
+    }
 }
 

@@ -1,12 +1,16 @@
 package com.example.networking;
 
-import android.view.View;
 
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
+@SuppressWarnings("WeakerAccess")
+public class RecyclerViewItem {
 
-public class RecyclerViewItem extends RecyclerView.ViewHolder{
-    public RecyclerViewItem(@NonNull View itemView) {
-        super(itemView);
+    private String title;
+
+    public RecyclerViewItem(String title) {
+        this.title = title;
+    }
+
+    public String getTitle() {
+        return title;
     }
 }

@@ -1,8 +1,12 @@
 package com.example.networking;
 
+import com.google.gson.annotations.SerializedName;
 public class Mountain {
+    @SerializedName("name")
     private String name;
+    @SerializedName("location")
     private String location;
+    @SerializedName("size")
     private int height;
 
     public Mountain(){

@@ -3,40 +3,63 @@
 
 **Skriv din rapport här!**
 
-_Du kan ta bort all text som finns sedan tidigare_.
+
 
 ## Följande grundsyn gäller dugga-svar:
 
-- Ett kortfattat svar är att föredra. Svar som är längre än en sida text (skärmdumpar och programkod exkluderat) är onödigt långt.
-- Svaret skall ha minst en snutt programkod.
-- Svaret skall inkludera en kort övergripande förklarande text som redogör för vad respektive snutt programkod gör eller som svarar på annan teorifråga.
-- Svaret skall ha minst en skärmdump. Skärmdumpar skall illustrera exekvering av relevant programkod. Eventuell text i skärmdumpar måste vara läsbar.
-- I de fall detta efterfrågas, dela upp delar av ditt svar i för- och nackdelar. Dina för- respektive nackdelar skall vara i form av punktlistor med kortare stycken (3-4 meningar).
+- Jag har skapat en RecyclerView
+- Jag har skapat en Java class som heter Mountain. I Mountain har jag skapat class state, jag använd  privat nyckelordet till varje variabel.Jag har använda getter's and setter's till variabel.
+- Jag har skapat RecyclerViewAdapte java class. Jag har skapat RecyclerViewItem java class.
+- Jag har skapat en ArrayList av items.
+- Den Adapter skrivs under den recyclerView. Eftersom i Adapter behöve data förstå vad listOfMountains är och i RecyclerView förklarade vad detta är.
+- Jag har använt Json.
+- Adapter uppdaterar innehållet i RecyclerView.
 
-Programkod ska se ut som exemplet nedan. Koden måste vara korrekt indenterad då den blir lättare att läsa vilket gör det lättare att hitta syntaktiska fel.
+
+
 
 ```
-function errorCallback(error) {
-    switch(error.code) {
-        case error.PERMISSION_DENIED:
-            // Geolocation API stöds inte, gör något
-            break;
-        case error.POSITION_UNAVAILABLE:
-            // Misslyckat positionsanrop, gör något
-            break;
-        case error.UNKNOWN_ERROR:
-            // Okänt fel, gör något
-            break;
-    }
-}
+public class Mountain {
+//state börjar här//
+    @SerializedName("name")
+    private String name;
+    @SerializedName("location")
+    private String location;
+    @SerializedName("size")
+    private int height;
+    
+ArrayList<RecyclerViewItem> listOfMountains= new ArrayList<>();//Skapa en ArrayList of items//
+RecyclerViewAdapter adapter;
+adapter = new RecyclerViewAdapter(this, listOfMountains, new RecyclerViewAdapter.OnClickListener() {
+            @Override
+            public void onClick(RecyclerViewItem item) {
+                Toast.makeText(MainActivity.this, item.getTitle(), Toast.LENGTH_SHORT).show();
+            }
+        });//Deklarera och initiera en adapter//
+    
+new JsonFile(this, this).execute(JSON_FILE);//Hämta data med URL eller file//
+
+
+RecyclerView view = findViewById(R.id.recycler_view);//Få en referens till vyn från layouten med hjälp av findViewById()//
+    view.setLayoutManager(new LinearLayoutManager(this));//Använd den referensen för att ställa in adaptern och en layouthanterare.//
+    view.setAdapter(adapter);
+
+@Override
+    public void onPostExecute(String json) {
+        Log.d("MainActivity", json);
+        Gson gson = new Gson(); // Create GSON object to perform marshall operations//
+        Type type = new TypeToken<List<Mountain>>() {}.getType();// Unmarshall JSON -> list of objects
+        List<Mountain> jsonMountains = gson.fromJson(json, type);
+        for(Mountain m : jsonMountains){
+            Log.d("MainActivityMountain", m.getName());
+            listOfMountains.add(new RecyclerViewItem(m.getName()));
+        }
+
+adapter.notifyDataSetChanged();//uppdaterat listan med hjälp av adapter//
 ```
 
-Bilder läggs i samma mapp som markdown-filen.
 
-![](android.png)
 
-Läs gärna:
+![](mobiljson.png)
 
-- Boulos, M.N.K., Warren, J., Gong, J. & Yue, P. (2010) Web GIS in practice VIII: HTML5 and the canvas element for interactive online mapping. International journal of health geographics 9, 14. Shin, Y. &
-- Wunsche, B.C. (2013) A smartphone-based golf simulation exercise game for supporting arthritis patients. 2013 28th International Conference of Image and Vision Computing New Zealand (IVCNZ), IEEE, pp. 459–464.
-- Wohlin, C., Runeson, P., Höst, M., Ohlsson, M.C., Regnell, B., Wesslén, A. (2012) Experimentation in Software Engineering, Berlin, Heidelberg: Springer Berlin Heidelberg.
+

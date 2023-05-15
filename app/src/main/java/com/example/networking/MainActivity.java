@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity implements JsonTask.JsonTask
             }
         });
 
-        new JsonFile(this, this).execute(JSON_FILE);
+        new JsonFile(this, this).execute(JSON_FILE);//Hämta data med URL eller file//
         RecyclerView view = findViewById(R.id.recycler_view);
         view.setLayoutManager(new LinearLayoutManager(this));
         view.setAdapter(adapter);
